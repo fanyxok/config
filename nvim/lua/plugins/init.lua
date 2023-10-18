@@ -4,55 +4,103 @@ local default_plugins = {
 
   "nvim-lua/plenary.nvim",
 
+  -- theme
   {
-    "NvChad/base46",
-    branch = "v2.0",
-    build = function()
-      require("base46").load_all_highlights()
-    end,
-  },
-
-  {
-    "NvChad/ui",
-    branch = "v2.0",
+    "folke/tokyonight.nvim",
     lazy = false,
+    priority = 1000,
+    opts = {},
   },
-
+  
+  -- status line 
   {
-    "NvChad/nvterm",
-    init = function()
-      require("core.utils").load_mappings "nvterm"
+    "nvim-lualine/lualine.nvim",
+    init = function ()
+      require("core.utils").lazy_load "lualine.nvim"
+    end,
+    opts = function()
+      return {
+      -- ... your lualine config
+        theme = 'tokyonight',
+      -- ... your lualine config
+        sections = {
+          lualine_a = {'mode'},
+          lualine_b = {'branch', 'diff', 'diagnostics'},
+          lualine_c = {'filename'},
+          lualine_x = {'encoding', 'fileformat', 'filetype'},
+          lualine_y = {'progress'},
+          lualine_z = {'location'}
+        },
+        winbar = {
+          lualine_a = {},
+          lualine_b = {},
+          lualine_c = {'filename'},
+          lualine_x = {},
+          lualine_y = {},
+          lualine_z = {}
+        },
+
+        inactive_winbar = {
+          lualine_a = {},
+          lualine_b = {},
+          lualine_c = {'filename'},
+          lualine_x = {},
+          lualine_y = {},
+          lualine_z = {}
+        },
+      }
     end,
     config = function(_, opts)
-      require "base46.term"
-      require("nvterm").setup(opts)
+      require("lualine").setup(opts)
+    end
+  },
+  
+  -- tabs bar 
+  {'romgrk/barbar.nvim',
+    dependencies = {
+      'lewis6991/gitsigns.nvim', -- OPTIONAL: for git status
+      'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
+    },
+    init = function() 
+      vim.g.barbar_auto_setup = false 
+      require("core.utils").lazy_load "barbar.nvim"
     end,
+    opts = {
+      -- lazy.nvim will automatically call setup for you. put your options here, anything missing will use the default:
+      -- animation = true,
+      -- insert_at_start = true,
+      -- …etc.
+    },
+    config = function (_, opts)
+      require("barbar").setup(opts)
+    end,
+    version = '^1.7.0', -- optional: only update when a new 1.x version is released
   },
 
-  {
-    "NvChad/nvim-colorizer.lua",
-    init = function()
-      require("core.utils").lazy_load "nvim-colorizer.lua"
-    end,
-    config = function(_, opts)
-      require("colorizer").setup(opts)
-
-      -- execute colorizer as soon as possible
-      vim.defer_fn(function()
-        require("colorizer").attach_to_buffer(0)
-      end, 0)
-    end,
-  },
-
+  -- icons for other plugins 
   {
     "nvim-tree/nvim-web-devicons",
-    opts = function()
-      return { override = require "nvchad.icons.devicons" }
-    end,
+    -- opts = function()
+    --   return { override = require "nvchad.icons.devicons" }
+    -- end,
     config = function(_, opts)
-      dofile(vim.g.base46_cache .. "devicons")
+      -- dofile(vim.g.base46_cache .. "devicons")
       require("nvim-web-devicons").setup(opts)
     end,
+  },
+
+  -- fuzzing search 
+  {
+    "ibhagwan/fzf-lua",
+    -- optional for icon support
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    init = function ()
+      require("core.utils").lazy_load "fzf-lua"
+    end,
+    config = function()
+      -- calling `setup` is optional for customization
+      require("fzf-lua").setup({})
+    end
   },
 
   {
@@ -66,7 +114,7 @@ local default_plugins = {
     end,
     config = function(_, opts)
       require("core.utils").load_mappings "blankline"
-      dofile(vim.g.base46_cache .. "blankline")
+      -- dofile(vim.g.base46_cache .. "blankline")
       require("indent_blankline").setup(opts)
     end,
   },
@@ -82,7 +130,7 @@ local default_plugins = {
       return require "plugins.configs.treesitter"
     end,
     config = function(_, opts)
-      dofile(vim.g.base46_cache .. "syntax")
+      -- dofile(vim.g.base46_cache .. "syntax")
       require("nvim-treesitter.configs").setup(opts)
     end,
   },
@@ -110,7 +158,7 @@ local default_plugins = {
       return require("plugins.configs.others").gitsigns
     end,
     config = function(_, opts)
-      dofile(vim.g.base46_cache .. "git")
+      -- dofile(vim.g.base46_cache .. "git")
       require("gitsigns").setup(opts)
     end,
   },
@@ -137,6 +185,20 @@ local default_plugins = {
 
   {
     "neovim/nvim-lspconfig",
+    dependencies = {
+      {
+        "nvimdev/lspsaga.nvim",
+        event = "VeryLazy",
+        opts = {
+          symbol_in_winbar = {
+            enable = false,
+          },
+          lightbulb = {
+            enable = false,
+          },
+        },
+      },
+    },
     init = function()
       require("core.utils").lazy_load "nvim-lspconfig"
     end,
@@ -144,7 +206,15 @@ local default_plugins = {
       require "plugins.configs.lspconfig"
     end,
   },
-
+  {
+    "folke/trouble.nvim",
+    cmd = { "TroubleToggle", "Trouble" },
+    opts = { use_diagnostic_signs = true },
+    -- keys = {
+      -- { "<leader>ld", "<cmd>TroubleToggle document_diagnostics<cr>", desc = "Document Diagnostics" },
+      -- { "<leader>lD", "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "Workspace Diagnostics" },
+    -- },
+  },
   -- load luasnips + cmp related in insert mode only
   {
     "hrsh7th/nvim-cmp",
@@ -192,7 +262,19 @@ local default_plugins = {
       require("cmp").setup(opts)
     end,
   },
-
+  -- AI assistent
+  {
+    "jackMort/ChatGPT.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("chatgpt").setup()
+    end,
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim"
+    }
+  },
   {
     "numToStr/Comment.nvim",
     keys = {
@@ -222,7 +304,7 @@ local default_plugins = {
       return require "plugins.configs.nvimtree"
     end,
     config = function(_, opts)
-      dofile(vim.g.base46_cache .. "nvimtree")
+      -- dofile(vim.g.base46_cache .. "nvimtree")
       require("nvim-tree").setup(opts)
     end,
   },
@@ -238,14 +320,14 @@ local default_plugins = {
       return require "plugins.configs.telescope"
     end,
     config = function(_, opts)
-      dofile(vim.g.base46_cache .. "telescope")
+      -- dofile(vim.g.base46_cache .. "telescope")
       local telescope = require "telescope"
       telescope.setup(opts)
 
       -- load extensions
-      for _, ext in ipairs(opts.extensions_list) do
-        telescope.load_extension(ext)
-      end
+      -- for _, ext in ipairs(opts.extensions_list) do
+        -- telescope.load_extension(ext)
+      -- end
     end,
   },
 
@@ -258,7 +340,7 @@ local default_plugins = {
     end,
     cmd = "WhichKey",
     config = function(_, opts)
-      dofile(vim.g.base46_cache .. "whichkey")
+      -- dofile(vim.g.base46_cache .. "whichkey")
       require("which-key").setup(opts)
     end,
   },
@@ -271,3 +353,4 @@ if #config.plugins > 0 then
 end
 
 require("lazy").setup(default_plugins, config.lazy_nvim)
+

@@ -401,6 +401,7 @@ M.blankline = {
   },
 }
 
+
 M.gitsigns = {
   plugin = true,
 

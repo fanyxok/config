@@ -1,5 +1,5 @@
-dofile(vim.g.base46_cache .. "lsp")
-require "nvchad.lsp"
+-- dofile(vim.g.base46_cache .. "lsp")
+-- require "nvchad.lsp"
 
 local M = {}
 local utils = require "core.utils"
@@ -54,7 +54,7 @@ require("lspconfig").lua_ls.setup {
         library = {
           [vim.fn.expand "$VIMRUNTIME/lua"] = true,
           [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
-          [vim.fn.stdpath "data" .. "/lazy/ui/nvchad_types"] = true,
+          -- [vim.fn.stdpath "data" .. "/lazy/ui/nvchad_types"] = true,
           [vim.fn.stdpath "data" .. "/lazy/lazy.nvim/lua/lazy"] = true,
         },
         maxPreload = 100000,

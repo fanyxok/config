@@ -7,11 +7,11 @@ M.options = {
 M.ui = {
   ------------------------------- base46 -------------------------------------
   -- hl = highlights
-  hl_add = {},
-  hl_override = {},
-  changed_themes = {},
-  theme_toggle = { "onedark", "one_light" },
-  theme = "onedark", -- default theme
+  -- hl_add = {},
+  -- hl_override = {},
+  -- changed_themes = {},
+  -- theme_toggle = { "onedark", "one_light" },
+  -- theme = "onedark", -- default theme
   transparency = false,
   lsp_semantic_tokens = false, -- needs nvim v0.9, just adds highlight groups for lsp semantic tokens
 
