@@ -9,7 +9,14 @@ local default_plugins = {
     "folke/tokyonight.nvim",
     lazy = false,
     priority = 1000,
-    opts = {},
+    opts = {
+      -- transparent = true,
+      styles = {
+        -- sidebars = "transparent",
+        -- floats = "transparent",
+      },
+      style = "moon",
+    },
   },
   
   -- status line 
@@ -267,7 +274,7 @@ local default_plugins = {
     "jackMort/ChatGPT.nvim",
     event = "VeryLazy",
     config = function()
-      require("chatgpt").setup()
+      -- require("chatgpt").setup()
     end,
     dependencies = {
       "MunifTanjim/nui.nvim",
@@ -344,6 +351,20 @@ local default_plugins = {
       require("which-key").setup(opts)
     end,
   },
+  {
+    "rmagatti/auto-session",
+    lazy = false,
+    opts = function ()
+      return require "plugins.configs.auto_session"
+    end,
+    config = function (_, opts)
+      require("auto-session").setup(opts)
+    end
+  },
+  {
+    "itchyny/calendar.vim",
+    lazy = false,
+  }
 }
 
 local config = require("core.utils").load_config()

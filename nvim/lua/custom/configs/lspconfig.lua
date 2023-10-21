@@ -2,6 +2,8 @@ local configs = require("plugins.configs.lspconfig")
 local on_attach = configs.on_attach
 local capabilities = configs.capabilities
 
+local clangd_cap = capabilities
+clangd_cap.offsetEncoding = {"utf-16"}
 local lspconfig = require "lspconfig"
 local servers = { "html", "cssls", "clangd"}
 
@@ -27,7 +29,7 @@ local servers = { "html", "cssls", "clangd"}
 lspconfig.clangd.setup {
   cmd = {"clangd", "--background-index", "--enable-config"},
   on_attach = on_attach,
-  capabilities = capabilities,
+  capabilities = clangd_cap,
 }
 
 lspconfig.pyright.setup{
