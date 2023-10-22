@@ -13,8 +13,8 @@ vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,te
 vim.g.calendar_google_calendar = 1
 vim.g.calendar_google_task = 1
 vim.g.calendar_google_api_key = '...'
-vim.g.calendar_google_client_id = "740868486507-0jnt2n0bo7i4ce7hgkafsd2qtbkip0jq.apps.googleusercontent.com"
-vim.g.calendar_google_client_secret = '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'
+vim.g.calendar_google_client_id = "..." 
+vim.g.calendar_google_client_secret = "..." 
 opt.laststatus = 3 -- global statusline
 opt.showmode = false
 
