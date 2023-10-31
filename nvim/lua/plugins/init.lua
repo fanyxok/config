@@ -178,7 +178,6 @@ local default_plugins = {
       return require "plugins.configs.mason"
     end,
     config = function(_, opts)
-      dofile(vim.g.base46_cache .. "mason")
       require("mason").setup(opts)
 
       -- custom nvchad cmd to install all mason binaries listed
