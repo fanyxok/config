@@ -1,0 +1,90 @@
+add_newline = false
+# [username]
+# format = "[$user]($style)@"
+# style_user = "bold dimmed blue"
+# style_root = "bold dimmed green"
+# show_always = true
+#
+# [hostname]
+# format = "[$hostname]($style) in "
+# trim_at = "-"
+# style = "bold dimmed white"
+# ssh_only = false
+# disabled = false
+#
+# [directory]
+# truncation_length = 0
+# truncation_to_repo = true 
+# truncation_symbol = "repo: "
+# format = "[$path]($style) "
+# # "$schema" = 'https://starship.rs/config-schema.json'
+# [git_status]
+# style = "white"
+# ahead = '⇡${count}'
+# diverged = '⇕⇡${ahead_count}⇣${behind_count}'
+# behind = '⇣${count}'
+# deleted = "x"
+#
+# [git_state]
+# format = '[\($state( $progress_current of $progress_total)\)]($style) '
+# cherry_pick = '[🍒 PICKING](bold red)'
+#
+# [git_branch]
+# symbol = " "
+# truncation_length = 4
+# truncation_symbol = ''
+# ignore_branches = ['master', 'main']
+# disabled = false
+#
+# [git_commit]
+# commit_hash_length = 4
+# tag_symbol = '🔖 '
+# disabled = false
+#
+#
+# [git_metrics]
+# added_style = 'bold blue'
+# format = '[+$added]($added_style)/[-$deleted]($deleted_style) '
+#
+# [battery]
+# full_symbol = "🔋"
+# charging_symbol = "🔌"
+# discharging_symbol = "⚡"
+# disabled = true 
+#
+# [[battery.display]]
+# threshold = 10
+# style = 'bold red'
+# disabled = true
+#
+# # Inserts a blank line between shell prompts
+# # Replace the '❯' symbol in the prompt with '➜'
+[character] # The name of the module we are configuring is 'character'
+success_symbol = '[➜](bold green)' # The 'success_symbol' segment is being set to '➜' with the color 'bold green'
+error_symbol = '[✗](bold red) '
+#
+# [conda]
+# symbol = " "
+#
+# # Disable the package module, hiding it from the prompt completely
+# [package]
+# symbol = " "
+#
+# [python]
+# symbol = " "
+# #pyenv_version_name = true
+# format = 'via [${symbol}python (${version} )(\($virtualenv\) )]($style)'
+# style = "bold yellow"
+# pyenv_prefix = "venv "
+# python_binary = ["./venv/bin/python", "python", "python3", "python2"]
+# detect_extensions = ["py"]
+# version_format = "v${raw}"
+#
+# [rust]
+# format = "[$symbol$version]($style) "
+# style = "bold green"
+#
+# [c]
+# format = 'via [$name $version]($style)'
+#
+#
